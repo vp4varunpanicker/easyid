@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --font-inter: "Inter", system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-inter);
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Also ensure disabled buttons don't show pointer */
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* ID Card Canvas Container Styling */
+.canvas-container {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: white;
+}
