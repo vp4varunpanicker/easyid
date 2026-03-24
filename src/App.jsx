@@ -193,7 +193,7 @@ const RoleBasedRedirect = () => {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/easyid">
       <LicenseGuard>
         <Routes>
           <Route path="/login" element={<AuthenticatedGuard><Login /></AuthenticatedGuard>} />
