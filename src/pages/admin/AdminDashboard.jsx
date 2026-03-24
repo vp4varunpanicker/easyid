@@ -100,7 +100,7 @@ export default function AdminDashboard() {
                 let readyCount = 0;
                 Object.values(classGroups).forEach(classStudents => {
                     const isClassReady = classStudents.every(student => {
-                        const hasBasicInfo = student.name && student.photoUrl && student.photoUrl !== '/default-avatar.svg';
+                        const hasBasicInfo = student.name && student.photoUrl && student.photoUrl !== import.meta.env.BASE_URL + 'default-avatar.svg';
                         const hasDynamicInfo = activeVars.every(v => student[v] && String(student[v]).trim() !== '');
                         return hasBasicInfo && hasDynamicInfo;
                     });

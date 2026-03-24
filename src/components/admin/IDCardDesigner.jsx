@@ -1520,7 +1520,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                 if (obj._originalVisible === undefined) obj._originalVisible = obj.visible;
                 let usePlaceholder = true;
 
-                if (student.photoUrl && student.photoUrl !== '/default-avatar.svg') {
+                if (student.photoUrl && student.photoUrl !== import.meta.env.BASE_URL + 'default-avatar.svg') {
                     try {
                         const imgUrl = student.photoUrl;
                         const isExternal = imgUrl.startsWith('http');
@@ -1724,7 +1724,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                     // Filter for 100% complete
                     pool = all.filter(s => {
                         const hasName = s.name && s.name.trim().length > 0;
-                        const hasPhoto = s.photoUrl && s.photoUrl !== '/default-avatar.svg';
+                        const hasPhoto = s.photoUrl && s.photoUrl !== import.meta.env.BASE_URL + 'default-avatar.svg';
                         const hasContact = !isActive('contact') || (s.emergencyContact && s.emergencyContact.trim().length > 0);
                         const hasAddress = !isActive('address') || (s.address && s.address.trim().length > 0);
                         return hasName && hasPhoto && hasContact && hasAddress;

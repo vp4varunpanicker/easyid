@@ -86,7 +86,7 @@ export default function StudentManager() {
 
     const isProfileComplete = (student) => {
         if (!student.name) return false;
-        if (!student.photoUrl || student.photoUrl === '/default-avatar.svg') return false;
+        if (!student.photoUrl || student.photoUrl === import.meta.env.BASE_URL + 'default-avatar.svg') return false;
         if (isActive('emergencyContact') && (!student.emergencyContact || student.emergencyContact.trim() === '')) return false;
         if (isActive('address') && (!student.address || student.address.trim() === '')) return false;
         if (isActive('bloodGroup') && (!student.bloodGroup || student.bloodGroup.trim() === '')) return false;
@@ -127,7 +127,7 @@ export default function StudentManager() {
         e.preventDefault();
         setUploading(true);
         try {
-            let photoUrl = '/default-avatar.svg';
+            let photoUrl = import.meta.env.BASE_URL + 'default-avatar.svg';
 
             if (newStudent.photo) {
                 const formData = new FormData();
@@ -335,8 +335,8 @@ export default function StudentManager() {
                     <div key={student.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-all group">
                         <div className="flex items-start gap-4">
                             <img
-                                src={student.photoUrl || '/default-avatar.svg'}
-                                onError={(e) => { e.target.onerror = null; e.target.src = '/default-avatar.svg'; }}
+                                src={student.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg'}
+                                onError={(e) => { e.target.onerror = null; e.target.src = import.meta.env.BASE_URL + 'default-avatar.svg'; }}
                                 alt=""
                                 className="w-14 h-14 rounded-xl object-cover bg-gray-50 border border-gray-100 shadow-sm"
                             />
@@ -619,8 +619,8 @@ export default function StudentManager() {
                             <div className="flex items-center gap-4">
                                 <div className="w-16 h-16 rounded-xl overflow-hidden border border-gray-100 flex-shrink-0 bg-gray-50">
                                     <img
-                                        src={editingStudent.photoFile ? URL.createObjectURL(editingStudent.photoFile) : (editingStudent.photoUrl || '/default-avatar.svg')}
-                                        onError={(e) => { e.target.onerror = null; e.target.src = '/default-avatar.svg'; }}
+                                        src={editingStudent.photoFile ? URL.createObjectURL(editingStudent.photoFile) : (editingStudent.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg')}
+                                        onError={(e) => { e.target.onerror = null; e.target.src = import.meta.env.BASE_URL + 'default-avatar.svg'; }}
                                         className="w-full h-full object-cover"
                                         alt="Preview"
                                     />

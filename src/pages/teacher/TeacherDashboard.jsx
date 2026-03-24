@@ -48,7 +48,7 @@ export default function TeacherDashboard() {
 
     const isProfileComplete = (student) => {
         if (!student.name) return false;
-        if (!student.photoUrl || student.photoUrl === '/default-avatar.svg') return false;
+        if (!student.photoUrl || student.photoUrl === import.meta.env.BASE_URL + 'default-avatar.svg') return false;
         if (isActive('emergencyContact') && (!student.emergencyContact || student.emergencyContact.trim() === '')) return false;
         if (isActive('address') && (!student.address || student.address.trim() === '')) return false;
         if (isActive('bloodGroup') && (!student.bloodGroup || student.bloodGroup.trim() === '')) return false;
@@ -769,7 +769,7 @@ export default function TeacherDashboard() {
                                                     {/* Selection & Avatar */}
                                                     <div className="relative shrink-0">
                                                         <img
-                                                            src={student.photoUrl || `/default-avatar.svg`}
+                                                            src={student.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg'}
                                                             alt=""
                                                             className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl sm:rounded-2xl object-cover bg-slate-50 border-2 border-white shadow-sm transition-transform group-hover:scale-105"
                                                         />

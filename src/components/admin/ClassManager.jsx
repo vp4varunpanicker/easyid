@@ -54,7 +54,7 @@ export default function ClassManager() {
 
     const isProfileComplete = (student) => {
         if (!student.name) return false;
-        if (!student.photoUrl || student.photoUrl === '/default-avatar.svg') return false;
+        if (!student.photoUrl || student.photoUrl === import.meta.env.BASE_URL + 'default-avatar.svg') return false;
         if (isActive('emergencyContact') && (!student.emergencyContact || student.emergencyContact.trim() === '')) return false;
         if (isActive('address') && (!student.address || student.address.trim() === '')) return false;
         if (isActive('bloodGroup') && (!student.bloodGroup || student.bloodGroup.trim() === '')) return false;
@@ -263,7 +263,7 @@ export default function ClassManager() {
         if (!viewingClass) return;
         setUploading(true);
         try {
-            let photoUrl = '/default-avatar.svg';
+            let photoUrl = import.meta.env.BASE_URL + 'default-avatar.svg';
 
             if (newStudent.photo) {
                 const formData = new FormData();
@@ -1015,8 +1015,8 @@ export default function ClassManager() {
                                                         <td className="px-8 py-4">
                                                             <div className="flex items-center gap-4">
                                                                 <img
-                                                                    src={student.photoUrl || `/default-avatar.svg`}
-                                                                    onError={(e) => { e.target.onerror = null; e.target.src = '/default-avatar.svg'; }}
+                                                                    src={student.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg'}
+                                                                    onError={(e) => { e.target.onerror = null; e.target.src = import.meta.env.BASE_URL + 'default-avatar.svg'; }}
                                                                     className="w-10 h-10 rounded-xl object-cover border border-gray-100 shadow-sm"
                                                                     alt=""
                                                                 />
@@ -1352,8 +1352,8 @@ export default function ClassManager() {
                                 <div className="flex items-center gap-4">
                                     <div className="w-16 h-16 rounded-xl overflow-hidden border border-gray-100 flex-shrink-0 bg-gray-50">
                                         <img
-                                            src={editingStudent.photoFile ? URL.createObjectURL(editingStudent.photoFile) : (editingStudent.photoUrl || '/default-avatar.svg')}
-                                            onError={(e) => { e.target.onerror = null; e.target.src = '/default-avatar.svg'; }}
+                                            src={editingStudent.photoFile ? URL.createObjectURL(editingStudent.photoFile) : (editingStudent.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg')}
+                                            onError={(e) => { e.target.onerror = null; e.target.src = import.meta.env.BASE_URL + 'default-avatar.svg'; }}
                                             className="w-full h-full object-cover"
                                             alt="Preview"
                                         />
