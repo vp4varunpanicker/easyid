@@ -87,7 +87,7 @@ export const generateCardSide = async (student, layoutInput) => {
         if (layout && Array.isArray(layout.objects)) {
             for (let i = 0; i < layout.objects.length; i++) {
                 const obj = layout.objects[i];
-                if (obj.type === 'image' && obj.src) {
+                if ((obj.type === 'image' || obj.type === 'FabricImage' || typeof obj.src === 'string') && obj.src) {
                     try {
                         obj.src = await getCleanImage(obj.src);
                         obj.crossOrigin = 'anonymous'; // Force for future reference
@@ -100,7 +100,7 @@ export const generateCardSide = async (student, layoutInput) => {
                 if (obj.type === 'group' && Array.isArray(obj.objects)) {
                     for (let j = 0; j < obj.objects.length; j++) {
                         const sub = obj.objects[j];
-                        if (sub.type === 'image' && sub.src) {
+                        if ((sub.type === 'image' || sub.type === 'FabricImage' || typeof sub.src === 'string') && sub.src) {
                             try {
                                 sub.src = await getCleanImage(sub.src);
                                 sub.crossOrigin = 'anonymous';
@@ -113,7 +113,7 @@ export const generateCardSide = async (student, layoutInput) => {
             }
         }
 
-        if (layout && layout.backgroundImage && layout.backgroundImage.type === 'image' && layout.backgroundImage.src) {
+        if (layout && layout.backgroundImage && (layout.backgroundImage.type === 'image' || layout.backgroundImage.type === 'FabricImage' || typeof layout.backgroundImage.src === 'string') && layout.backgroundImage.src) {
             try {
                 layout.backgroundImage.src = await getCleanImage(layout.backgroundImage.src);
                 layout.backgroundImage.crossOrigin = 'anonymous';
@@ -122,7 +122,7 @@ export const generateCardSide = async (student, layoutInput) => {
             }
         }
 
-        if (layout && layout.overlayImage && layout.overlayImage.type === 'image' && layout.overlayImage.src) {
+        if (layout && layout.overlayImage && (layout.overlayImage.type === 'image' || layout.overlayImage.type === 'FabricImage' || typeof layout.overlayImage.src === 'string') && layout.overlayImage.src) {
             try {
                 layout.overlayImage.src = await getCleanImage(layout.overlayImage.src);
                 layout.overlayImage.crossOrigin = 'anonymous';
