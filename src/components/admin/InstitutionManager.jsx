@@ -20,7 +20,8 @@ export default function InstitutionManager() {
     const [newSignature, setNewSignature] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [signaturePreviewUrl, setSignaturePreviewUrl] = useState(null);
-
+    const [logoError, setLogoError] = useState(false);
+    const [signatureError, setSignatureError] = useState(false);
 
     useEffect(() => {
         const fetchInstitution = async () => {
@@ -30,6 +31,8 @@ export default function InstitutionManager() {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     setDetails(prev => ({ ...prev, ...data }));
+                    setLogoError(false);
+                    setSignatureError(false);
                 }
             } catch (error) {
                 console.error("Error fetching institution:", error);
@@ -49,9 +52,11 @@ export default function InstitutionManager() {
             if (type === 'logo') {
                 setNewLogo(file);
                 setPreviewUrl(url);
+                setLogoError(false);
             } else {
                 setNewSignature(file);
                 setSignaturePreviewUrl(url);
+                setSignatureError(false);
             }
             setStatus({ type: null, message: "" });
         }
@@ -213,8 +218,13 @@ export default function InstitutionManager() {
                             <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
                                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Institution Logo</span>
                                 <div className="h-32 w-32 rounded-xl bg-white shadow-sm flex items-center justify-center overflow-hidden border border-gray-200 mb-4">
-                                    {(previewUrl || details.logoUrl) ? (
-                                        <img src={previewUrl || details.logoUrl} alt="Logo" className="h-full w-full object-contain p-2" />
+                                    {(previewUrl || details.logoUrl) && !logoError ? (
+                                        <img 
+                                            src={previewUrl || details.logoUrl} 
+                                            alt="Logo" 
+                                            className="h-full w-full object-contain p-2" 
+                                            onError={() => setLogoError(true)}
+                                        />
                                     ) : (
                                         <Building className="h-12 w-12 text-gray-300" />
                                     )}
@@ -230,8 +240,13 @@ export default function InstitutionManager() {
                             <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
                                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Authorized Signature</span>
                                 <div className="h-32 w-32 rounded-xl bg-white shadow-sm flex items-center justify-center overflow-hidden border border-gray-200 mb-4">
-                                    {(signaturePreviewUrl || details.signatureUrl) ? (
-                                        <img src={signaturePreviewUrl || details.signatureUrl} alt="Signature" className="h-full w-full object-contain p-2" />
+                                    {(signaturePreviewUrl || details.signatureUrl) && !signatureError ? (
+                                        <img 
+                                            src={signaturePreviewUrl || details.signatureUrl} 
+                                            alt="Signature" 
+                                            className="h-full w-full object-contain p-2" 
+                                            onError={() => setSignatureError(true)}
+                                        />
                                     ) : (
                                         <div className="text-[10px] text-gray-400 font-bold text-center px-4">PRINCIPAL SIGNATURE</div>
                                     )}
