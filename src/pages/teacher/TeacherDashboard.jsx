@@ -769,7 +769,7 @@ export default function TeacherDashboard() {
                                                     {/* Selection & Avatar */}
                                                     <div className="relative shrink-0">
                                                         <img
-                                                            src={student.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg'}
+                                                            src={(student.photoUrl?.startsWith('/uploads') ? import.meta.env.BASE_URL + student.photoUrl.slice(1) : student.photoUrl) || import.meta.env.BASE_URL + 'default-avatar.svg'}
                                                             alt=""
                                                             className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl sm:rounded-2xl object-cover bg-slate-50 border-2 border-white shadow-sm transition-transform group-hover:scale-105"
                                                         />
@@ -1035,7 +1035,7 @@ export default function TeacherDashboard() {
                                         <div className="relative group">
                                             <div className="w-24 h-24 rounded-[2rem] overflow-hidden border-4 border-white shadow-xl bg-slate-100">
                                                 <img
-                                                    src={editingStudent.photo ? URL.createObjectURL(editingStudent.photo) : editingStudent.photoUrl}
+                                                    src={editingStudent.photo ? URL.createObjectURL(editingStudent.photo) : ((editingStudent.photoUrl?.startsWith('/uploads') ? import.meta.env.BASE_URL + editingStudent.photoUrl.slice(1) : editingStudent.photoUrl) || import.meta.env.BASE_URL + 'default-avatar.svg')}
                                                     className="w-full h-full object-cover transition-transform group-hover:scale-110"
                                                     alt="Preview"
                                                 />

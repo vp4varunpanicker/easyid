@@ -220,7 +220,7 @@ export default function InstitutionManager() {
                                 <div className="h-32 w-32 rounded-xl bg-white shadow-sm flex items-center justify-center overflow-hidden border border-gray-200 mb-4">
                                     {(previewUrl || details.logoUrl) && !logoError ? (
                                         <img 
-                                            src={previewUrl || details.logoUrl} 
+                                            src={previewUrl || (details.logoUrl?.startsWith('/uploads') ? import.meta.env.BASE_URL + details.logoUrl.slice(1) : details.logoUrl)} 
                                             alt="Logo" 
                                             className="h-full w-full object-contain p-2" 
                                             onError={() => setLogoError(true)}
@@ -242,7 +242,7 @@ export default function InstitutionManager() {
                                 <div className="h-32 w-32 rounded-xl bg-white shadow-sm flex items-center justify-center overflow-hidden border border-gray-200 mb-4">
                                     {(signaturePreviewUrl || details.signatureUrl) && !signatureError ? (
                                         <img 
-                                            src={signaturePreviewUrl || details.signatureUrl} 
+                                            src={signaturePreviewUrl || (details.signatureUrl?.startsWith('/uploads') ? import.meta.env.BASE_URL + details.signatureUrl.slice(1) : details.signatureUrl)} 
                                             alt="Signature" 
                                             className="h-full w-full object-contain p-2" 
                                             onError={() => setSignatureError(true)}

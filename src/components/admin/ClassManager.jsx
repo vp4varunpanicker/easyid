@@ -1015,7 +1015,7 @@ export default function ClassManager() {
                                                         <td className="px-8 py-4">
                                                             <div className="flex items-center gap-4">
                                                                 <img
-                                                                    src={student.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg'}
+                                                                    src={(student.photoUrl?.startsWith('/uploads') ? import.meta.env.BASE_URL + student.photoUrl.slice(1) : student.photoUrl) || import.meta.env.BASE_URL + 'default-avatar.svg'}
                                                                     onError={(e) => { e.target.onerror = null; e.target.src = import.meta.env.BASE_URL + 'default-avatar.svg'; }}
                                                                     className="w-10 h-10 rounded-xl object-cover border border-gray-100 shadow-sm"
                                                                     alt=""
@@ -1352,7 +1352,7 @@ export default function ClassManager() {
                                 <div className="flex items-center gap-4">
                                     <div className="w-16 h-16 rounded-xl overflow-hidden border border-gray-100 flex-shrink-0 bg-gray-50">
                                         <img
-                                            src={editingStudent.photoFile ? URL.createObjectURL(editingStudent.photoFile) : (editingStudent.photoUrl || import.meta.env.BASE_URL + 'default-avatar.svg')}
+                                            src={editingStudent.photoFile ? URL.createObjectURL(editingStudent.photoFile) : ((editingStudent.photoUrl?.startsWith('/uploads') ? import.meta.env.BASE_URL + editingStudent.photoUrl.slice(1) : editingStudent.photoUrl) || import.meta.env.BASE_URL + 'default-avatar.svg')}
                                             onError={(e) => { e.target.onerror = null; e.target.src = import.meta.env.BASE_URL + 'default-avatar.svg'; }}
                                             className="w-full h-full object-cover"
                                             alt="Preview"
