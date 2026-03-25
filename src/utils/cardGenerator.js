@@ -113,6 +113,24 @@ export const generateCardSide = async (student, layoutInput) => {
             }
         }
 
+        if (layout && layout.backgroundImage && layout.backgroundImage.type === 'image' && layout.backgroundImage.src) {
+            try {
+                layout.backgroundImage.src = await getCleanImage(layout.backgroundImage.src);
+                layout.backgroundImage.crossOrigin = 'anonymous';
+            } catch (e) {
+                console.warn("Failed to clean background image source:", layout.backgroundImage.src);
+            }
+        }
+
+        if (layout && layout.overlayImage && layout.overlayImage.type === 'image' && layout.overlayImage.src) {
+            try {
+                layout.overlayImage.src = await getCleanImage(layout.overlayImage.src);
+                layout.overlayImage.crossOrigin = 'anonymous';
+            } catch (e) {
+                console.warn("Failed to clean overlay image source:", layout.overlayImage.src);
+            }
+        }
+
         // 4. Load the normalized layout
         // For Fabric 7, loadFromJSON is a promise
         await fabricCanvas.loadFromJSON(layout);
