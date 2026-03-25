@@ -10,11 +10,14 @@ import { collection, getDocs } from "firebase/firestore";
 const normalizeUrl = (url) => {
     if (!url) return url;
     if (typeof url !== 'string') return url;
-    let finalUrl = url.replace(/^http:\/\/localhost:5000\//, '/');
-    if (finalUrl.startsWith('/uploads/')) {
-        finalUrl = import.meta.env.BASE_URL + finalUrl.slice(1);
+    
+    const uploadsIndex = url.indexOf('/uploads/');
+    if (uploadsIndex !== -1) {
+        const pathPart = url.substring(uploadsIndex);
+        return import.meta.env.BASE_URL + pathPart.slice(1);
     }
-    return finalUrl;
+    
+    return url;
 };
 
 /**
