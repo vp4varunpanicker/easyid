@@ -193,7 +193,7 @@ const RoleBasedRedirect = () => {
 
 function App() {
   return (
-    <Router basename="/easyid">
+    <Router basename={import.meta.env.DEV ? "/" : "/easyid"}>
       <LicenseGuard>
         <Routes>
           <Route path="/login" element={<AuthenticatedGuard><Login /></AuthenticatedGuard>} />

@@ -289,7 +289,7 @@ export default function AdminDashboard() {
         <div className="flex h-screen bg-[#FDFDFF] overflow-hidden font-['Inter']">
             <NotificationModal />
             {/* LEFT SIDEBAR NAVIGATION */}
-            <nav className={`fixed bottom-0 left-0 w-full h-16 md:h-screen md:w-[120px] bg-white border-t md:border-t-0 md:border-r border-gray-100 flex flex-row md:flex-col items-center px-4 md:px-0 md:py-10 shadow-[0_-10px_40px_rgba(0,0,0,0.02)] md:shadow-[20px_0_40px_rgba(0,0,0,0.02)] z-50 overflow-x-auto md:overflow-x-hidden overflow-y-hidden md:overflow-y-auto scrollbar-hide ${isDesignerExpanded || !licenseStatus.active ? 'hidden' : ''}`}>
+            <nav className={`fixed md:relative bottom-0 left-0 w-full h-16 md:h-screen md:w-[120px] bg-white border-t md:border-t-0 md:border-r border-gray-100 flex flex-row md:flex-col items-center px-4 md:px-0 md:py-10 shadow-[0_-10px_40px_rgba(0,0,0,0.02)] md:shadow-[20px_0_40px_rgba(0,0,0,0.02)] z-50 overflow-x-auto md:overflow-x-hidden overflow-y-hidden md:overflow-y-auto scrollbar-hide ${isDesignerExpanded || !licenseStatus.active ? 'hidden' : ''}`}>
                 <div className="hidden md:block mb-12">
                     <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-100 rotate-3 mx-auto">
                         <GraduationCap className="w-7 h-7 text-white" />
