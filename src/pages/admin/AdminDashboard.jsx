@@ -289,8 +289,8 @@ export default function AdminDashboard() {
         <div className="flex h-screen bg-[#FDFDFF] overflow-hidden font-['Inter']">
             <NotificationModal />
             {/* LEFT SIDEBAR NAVIGATION */}
-            <nav className={`w-[120px] flex-shrink-0 bg-white border-r border-gray-100 flex flex-col items-center py-10 shadow-[20px_0_40px_rgba(0,0,0,0.02)] z-50 overflow-y-auto overflow-x-hidden scrollbar-hide ${isDesignerExpanded || !licenseStatus.active ? 'hidden' : ''}`}>
-                <div className="mb-12">
+            <nav className={`fixed bottom-0 left-0 w-full h-16 md:h-screen md:w-[120px] bg-white border-t md:border-t-0 md:border-r border-gray-100 flex flex-row md:flex-col items-center px-4 md:px-0 md:py-10 shadow-[0_-10px_40px_rgba(0,0,0,0.02)] md:shadow-[20px_0_40px_rgba(0,0,0,0.02)] z-50 overflow-x-auto md:overflow-x-hidden overflow-y-hidden md:overflow-y-auto scrollbar-hide ${isDesignerExpanded || !licenseStatus.active ? 'hidden' : ''}`}>
+                <div className="hidden md:block mb-12">
                     <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-100 rotate-3 mx-auto">
                         <GraduationCap className="w-7 h-7 text-white" />
                     </div>
@@ -299,66 +299,74 @@ export default function AdminDashboard() {
                     </div>
                 </div>
 
-                <div className="flex-1 w-full px-3 flex flex-col gap-2 min-h-0 py-2">
+                <div className="flex-1 w-full px-3 flex flex-row md:flex-col gap-1 md:gap-2 min-h-0 py-2 items-center md:items-stretch">
                     {visibleNavItems.filter(item => !['profile', 'docs'].includes(item.id)).map((item) => (
                         <Link
                             key={item.id}
                             to={item.id === 'dashboard' ? '/admin' : `/admin/${item.id}`}
-                            className={`group w-full flex-shrink-0 flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl transition-all duration-300 ${activeView === item.id || (item.id === 'dashboard' && activeView === 'admin')
+                            className={`group flex-shrink-0 flex flex-col items-center justify-center gap-1 py-2 md:py-3 px-4 md:px-0 rounded-xl transition-all duration-300 ${activeView === item.id || (item.id === 'dashboard' && activeView === 'admin')
                                 ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-100'
                                 : 'text-gray-300 hover:bg-gray-50 hover:text-gray-500'
                                 }`}
                         >
-                            <item.icon className={`w-6 h-6 ${activeView === item.id || (item.id === 'dashboard' && activeView === 'admin') ? 'opacity-100' : 'group-hover:scale-110 transition-transform'}`} />
-                            <span className={`text-[9px] font-bold uppercase tracking-wider leading-none ${activeView === item.id || (item.id === 'dashboard' && activeView === 'admin') ? 'text-white' : 'text-gray-400'}`}>
+                            <item.icon className={`w-5 h-5 md:w-6 md:h-6 ${activeView === item.id || (item.id === 'dashboard' && activeView === 'admin') ? 'opacity-100' : 'group-hover:scale-110 transition-transform'}`} />
+                            <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-wider leading-none ${activeView === item.id || (item.id === 'dashboard' && activeView === 'admin') ? 'text-white' : 'text-gray-400'}`}>
                                 {item.label}
                             </span>
                         </Link>
                     ))}
                 </div>
-
             </nav>
 
             {/* MAIN CONTENT AREA */}
             <div className="flex-1 flex flex-col relative overflow-hidden">
-                <header className={`h-[100px] flex-shrink-0 flex items-center justify-between px-12 bg-white/50 backdrop-blur-xl border-b border-gray-100/50 z-40 ${isDesignerExpanded ? 'hidden' : ''}`}>
-                    <div>
-                        <div className="flex items-center gap-3">
-                            <h1 className="text-3xl font-[900] text-gray-900 uppercase tracking-tighter">{getTitle()}</h1>
-                            {activeView !== 'dashboard' && activeView !== 'admin' && (
-                                <Link
-                                    to="/admin"
-                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-400 text-[10px] font-black rounded-lg transition-all uppercase tracking-widest"
-                                >
-                                    Exit View
-                                </Link>
-                            )}
+                <header className={`h-16 md:h-[100px] flex-shrink-0 flex items-center justify-between px-4 md:px-12 bg-white/50 backdrop-blur-xl border-b border-gray-100/50 z-40 ${isDesignerExpanded ? 'hidden' : ''}`}>
+                    <div className="flex items-center gap-4">
+                        {/* Mobile Logo */}
+                        <div className="md:hidden flex items-center gap-2">
+                            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-100 rotate-3">
+                                <GraduationCap className="w-5 h-5 text-white" />
+                            </div>
                         </div>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-1">Institution ID Management System • Admin Panel</p>
+
+                        <div>
+                            <div className="flex items-center gap-2 md:gap-3">
+                                <h1 className="text-lg md:text-3xl font-[900] text-gray-900 uppercase tracking-tighter leading-none">{getTitle()}</h1>
+                                {activeView !== 'dashboard' && activeView !== 'admin' && (
+                                    <Link
+                                        to="/admin"
+                                        className="px-2 py-0.5 md:px-3 md:py-1 bg-gray-100 hover:bg-gray-200 text-gray-400 text-[8px] md:text-[10px] font-black rounded-lg transition-all uppercase tracking-widest"
+                                    >
+                                        Exit
+                                    </Link>
+                                )}
+                            </div>
+                            <p className="hidden md:block text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-1">Institution ID Management System • Admin Panel</p>
+                        </div>
                     </div>
 
-                    <div className="hidden md:flex items-center gap-2">
-                        <div className="flex flex-col items-end">
+                    <div className="flex items-center gap-1 md:gap-2">
+                        <div className="hidden md:flex flex-col items-end">
                             <span className="text-sm font-black text-gray-900 tracking-tight">{profile.name || 'Admin'}</span>
                             <span className="text-[9px] font-bold text-indigo-500 uppercase tracking-[0.2em] px-2 py-0.5 bg-indigo-50 rounded-full mt-0.5 border border-indigo-100">{userRole === 'super_admin' ? 'Super Admin' : 'Administrator'}</span>
                         </div>
-                        <Link to="/admin/profile" className="w-10 h-10 bg-gray-100 rounded-2xl border-2 border-white shadow-sm overflow-hidden p-1 hover:border-indigo-400 transition-all group">
-                            <div className="w-full h-full bg-indigo-100 rounded-xl flex items-center justify-center group-hover:bg-indigo-200 transition-colors">
-                                <UserCircle className="w-6 h-6 text-indigo-400 group-hover:text-indigo-600 transition-colors" />
+                        <Link to="/admin/profile" className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 rounded-xl md:rounded-2xl border-2 border-white shadow-sm overflow-hidden p-0.5 md:p-1 hover:border-indigo-400 transition-all group">
+                            <div className="w-full h-full bg-indigo-100 rounded-lg md:rounded-xl flex items-center justify-center group-hover:bg-indigo-200 transition-colors">
+                                <UserCircle className="w-5 h-5 md:w-6 md:h-6 text-indigo-400 group-hover:text-indigo-600 transition-colors" />
                             </div>
                         </Link>
 
                         <button
                             onClick={() => setShowNotificationModal(true)}
-                            className={`w-10 h-10 flex items-center justify-center rounded-2xl transition-all border-2 relative ${unreadCount > 0
+                            className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl md:rounded-2xl transition-all border-2 relative ${unreadCount > 0
                                 ? 'bg-rose-50 text-rose-600 border-rose-100'
                                 : 'text-gray-400 hover:bg-gray-50 hover:text-gray-600 border-transparent hover:border-gray-100'
                                 }`}
                             title="Notifications"
                         >
-                            <Bell className="w-5 h-5" />
+                            <Bell className="w-4 h-4 md:w-5 md:h-5" />
                             {unreadCount > 0 && (
-                                <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-[10px] font-bold rounded-lg flex items-center justify-center shadow-sm border-2 border-white">
+                                <span className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-rose-500 text-white text-[8px] md:text-[10px] font-bold rounded-lg flex items-center justify-center shadow-sm border-2 border-white">
                                     {unreadCount}
                                 </span>
                             )}
@@ -366,7 +374,7 @@ export default function AdminDashboard() {
                         {userRole === 'super_admin' && (
                             <Link
                                 to="/admin/settings"
-                                className={`w-10 h-10 flex items-center justify-center rounded-2xl transition-all border-2 ${activeView === 'settings'
+                                className={`hidden md:flex w-10 h-10 items-center justify-center rounded-2xl transition-all border-2 ${activeView === 'settings'
                                     ? 'bg-red-50 text-red-600 border-red-100'
                                     : 'text-gray-400 hover:bg-gray-50 hover:text-gray-600 border-transparent hover:border-gray-100'
                                     }`}
@@ -377,7 +385,7 @@ export default function AdminDashboard() {
                         )}
                         <Link
                             to="/admin/docs"
-                            className={`w-10 h-10 flex items-center justify-center rounded-2xl transition-all border-2 ${activeView === 'docs'
+                            className={`hidden md:flex w-10 h-10 items-center justify-center rounded-2xl transition-all border-2 ${activeView === 'docs'
                                 ? 'bg-indigo-50 text-indigo-600 border-indigo-100'
                                 : 'text-gray-400 hover:bg-gray-50 hover:text-gray-600 border-transparent hover:border-gray-100'
                                 }`}
@@ -387,15 +395,15 @@ export default function AdminDashboard() {
                         </Link>
                         <button
                             onClick={handleLogout}
-                            className="w-10 h-10 flex items-center justify-center rounded-2xl text-red-400 hover:bg-red-50 hover:text-red-600 transition-all border-2 border-transparent hover:border-red-100"
+                            className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl md:rounded-2xl text-red-400 hover:bg-red-50 hover:text-red-600 transition-all border-2 border-transparent hover:border-red-100"
                             title="Logout"
                         >
-                            <LogOut className="w-5 h-5" />
+                            <LogOut className="w-4 h-4 md:w-5 md:h-5" />
                         </button>
                     </div>
                 </header>
 
-                <main className={`flex-1 overflow-y-auto scroll-smooth ${isDesignerExpanded ? 'p-0' : 'p-12'}`}>
+                <main className={`flex-1 overflow-y-auto scroll-smooth pb-24 md:pb-0 ${isDesignerExpanded ? 'p-0' : 'p-4 md:p-12'}`}>
                     <Routes>
                         <Route index element={<DashboardHome />} />
 

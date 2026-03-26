@@ -2254,58 +2254,59 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
         <div className={`transition-all duration-300 flex flex-col gap-6 ${isExpanded ? 'max-w-none w-full h-full' : 'max-w-7xl mx-auto p-4'}`}>
 
             {/* Full-width Designer Header */}
-            <div className="w-full bg-white border border-gray-200 px-6 py-3 flex flex-wrap items-center justify-between z-30 sticky top-0 shadow-sm">
+            <div className="w-full bg-white border-b border-gray-200 z-30 sticky top-0 shadow-sm overflow-hidden text-nowrap">
+                <div className="px-4 md:px-6 py-2 md:py-3 flex items-center justify-between overflow-x-auto scrollbar-hide gap-4">
 
                 {/* Left Group: Sidedness & Perspective */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 shrink-0">
                     <div className="flex gap-1 bg-gray-50 p-1 rounded-xl">
-                        <button onClick={() => switchSide('front')} className={`flex items-center px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeSide === 'front' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-900'}`}><CreditCard className="w-4 h-4 mr-2" /> Front</button>
+                        <button onClick={() => switchSide('front')} className={`flex items-center px-3 md:px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeSide === 'front' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-900'}`}><CreditCard className="w-4 h-4 md:mr-2" /> <span className="hidden md:inline">Front</span></button>
                         {isDoubleSided && (
-                            <button onClick={() => switchSide('back')} className={`flex items-center px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeSide === 'back' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-900'}`}><RotateCw className="w-4 h-4 mr-2" /> Back</button>
+                            <button onClick={() => switchSide('back')} className={`flex items-center px-3 md:px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeSide === 'back' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-900'}`}><RotateCw className="w-4 h-4 md:mr-2" /> <span className="hidden md:inline">Back</span></button>
                         )}
                     </div>
 
-                    <div className="flex items-center bg-gray-100 p-0.5 rounded-xl text-[10px] font-black uppercase tracking-widest">
+                    <div className="flex items-center bg-gray-100 p-0.5 rounded-xl text-[10px] font-black uppercase tracking-widest shrink-0">
                         <button
                             onClick={() => {
                                 if (!isDoubleSided) return;
                                 setIsDoubleSided(false);
                                 if (activeSide === 'back') switchSide('front');
                             }}
-                            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg transition-all ${!isDoubleSided ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${!isDoubleSided ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                         >
-                            <Plus className="w-3.5 h-3.5" /> Single
+                            <Plus className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Single</span>
                         </button>
                         <button
                             onClick={() => {
                                 if (isDoubleSided) return;
                                 setIsDoubleSided(true);
                             }}
-                            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg transition-all ${isDoubleSided ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${isDoubleSided ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                         >
-                            <Layers className="w-3.5 h-3.5" /> Double
+                            <Layers className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Double</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Center Group: Mode & History */}
-                <div className="flex items-center justify-center gap-3">
+                <div className="flex items-center justify-center gap-3 shrink-0">
                     <div className="flex items-center p-0.5 rounded-[12px] text-[10px] font-black uppercase tracking-widest bg-indigo-50/50">
                         <button
                             onClick={() => { if (previewMode) togglePreview(); }}
-                            className={`flex items-center gap-1.5 px-6 py-2 rounded-lg transition-all ${!previewMode ? 'bg-indigo-600 text-white shadow-md' : 'text-indigo-600/70 hover:text-indigo-800'}`}
+                            className={`flex items-center gap-1.5 px-4 md:px-6 py-2 rounded-lg transition-all whitespace-nowrap ${!previewMode ? 'bg-indigo-600 text-white shadow-md' : 'text-indigo-600/70 hover:text-indigo-800'}`}
                         >
-                            <Type className="w-4 h-4" /> Editor
+                            <Type className="w-4 h-4" /> <span className="hidden sm:inline">Editor</span>
                         </button>
                         <button
                             onClick={() => { if (!previewMode) togglePreview(); }}
-                            className={`flex items-center gap-1.5 px-6 py-2 rounded-lg transition-all ${previewMode ? 'bg-indigo-600 text-white shadow-md animate-pulse' : 'text-indigo-600/70 hover:text-indigo-800'}`}
+                            className={`flex items-center gap-1.5 px-4 md:px-6 py-2 rounded-lg transition-all whitespace-nowrap ${previewMode ? 'bg-indigo-600 text-white shadow-md animate-pulse' : 'text-indigo-600/70 hover:text-indigo-800'}`}
                         >
-                            <Eye className="w-4 h-4" /> Preview
+                            <Eye className="w-4 h-4" /> <span className="hidden sm:inline">Preview</span>
                         </button>
                     </div>
 
-                    <div className="w-px h-6 bg-gray-200 mx-1" />
+                    <div className="hidden sm:block w-px h-6 bg-gray-200 mx-1" />
 
                     <div className="flex p-0.5 rounded-[12px] items-center gap-1 bg-gray-50">
                         <button
@@ -2331,9 +2332,9 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                             <div className="w-px h-6 bg-gray-200 mx-1" />
                             <button
                                 onClick={shufflePreview}
-                                className="flex items-center gap-1.5 px-4 py-2 bg-pink-50 text-pink-600 rounded-lg border border-pink-100 hover:bg-pink-100 transition-all font-black text-[10px] uppercase tracking-widest animate-in slide-in-from-left-2 duration-300"
+                                className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-pink-50 text-pink-600 rounded-lg border border-pink-100 hover:bg-pink-100 transition-all font-black text-[10px] uppercase tracking-widest whitespace-nowrap"
                             >
-                                <Shuffle className="w-3.5 h-3.5" /> Shuffle
+                                <Shuffle className="w-3.5 h-3.5" /> <span className="hidden lg:inline">Shuffle</span>
                             </button>
                         </>
                     )}
@@ -2425,9 +2426,10 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                         </button>
                     </div>
                 </div>
+                </div>
             </div>
 
-            <div className={`flex flex-col xl:flex-row gap-8 items-start min-h-full ${isExpanded ? 'flex-1 overflow-y-auto scroll-smooth p-12 pt-0' : ''}`}>
+            <div className={`flex flex-col xl:flex-row gap-8 items-start min-h-full ${isExpanded ? 'flex-1 overflow-y-auto scroll-smooth p-6 md:p-12 pt-0' : ''}`}>
                 <div className={`flex-1 flex flex-col items-center gap-6 w-full relative`}>
                     {loading && (
                         <div className="absolute inset-0 z-[100] bg-white/80 backdrop-blur-sm rounded-box flex flex-col items-center justify-center border border-indigo-100">
@@ -2437,8 +2439,8 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                     )}
 
                     {/* Canvas Area */}
-                    <div className="relative group transition-all duration-500 ease-out z-10 pt-4">
-                        <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-2xl overflow-hidden"><canvas ref={canvasRef} /></div>
+                    <div className="relative group transition-all duration-500 ease-out z-10 pt-4 w-full overflow-x-auto scrollbar-hide flex justify-center">
+                        <div className="bg-white p-6 md:p-10 rounded-2xl md:rounded-3xl border border-gray-100 shadow-2xl overflow-hidden shrink-0"><canvas ref={canvasRef} /></div>
                     </div>
                     {status.message && (
                         <div className={`flex items-center px-4 py-2 rounded-lg text-xs font-bold animate-in fade-in slide-in-from-bottom-1 z-20 ${status.type === 'success' ? 'bg-green-100 text-green-700' : status.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
