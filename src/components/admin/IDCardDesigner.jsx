@@ -70,6 +70,31 @@ const SERIALIZE_PROPS = [
     'opacity'
 ];
 
+const normalizeUrl = (url) => {
+    if (!url || typeof url !== 'string') return url;
+    const uploadsIndex = url.indexOf('/uploads/');
+    if (uploadsIndex !== -1) {
+        return import.meta.env.BASE_URL + url.substring(uploadsIndex).slice(1);
+    }
+    return url;
+};
+
+const sanitizeLayoutJSON = (json) => {
+    if (!json) return json;
+    // deep clone so we don't mutate state directly
+    const cloned = JSON.parse(JSON.stringify(json));
+    const cleanObj = (obj) => {
+        if ((obj.type === 'image' || obj.type === 'FabricImage' || typeof obj.src === 'string') && obj.src) {
+            obj.src = normalizeUrl(obj.src);
+        }
+        if (obj.objects) obj.objects.forEach(cleanObj);
+    };
+    if (cloned.objects) cloned.objects.forEach(cleanObj);
+    if (cloned.backgroundImage) cleanObj(cloned.backgroundImage);
+    if (cloned.overlayImage) cleanObj(cloned.overlayImage);
+    return cloned;
+};
+
 export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
     const canvasRef = useRef(null);
     const [fabricCanvas, setFabricCanvas] = useState(null);
@@ -244,7 +269,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
 
         isHistoryProcessing.current = true;
         try {
-            await fabricCanvas.loadFromJSON(JSON.parse(previousState));
+            await fabricCanvas.loadFromJSON(sanitizeLayoutJSON(JSON.parse(previousState)));
             restoreCustomRx(fabricCanvas);
 
             fabricCanvas.getObjects().forEach(obj => {
@@ -280,7 +305,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
 
         isHistoryProcessing.current = true;
         try {
-            await fabricCanvas.loadFromJSON(JSON.parse(nextState));
+            await fabricCanvas.loadFromJSON(sanitizeLayoutJSON(JSON.parse(nextState)));
             restoreCustomRx(fabricCanvas);
 
             fabricCanvas.getObjects().forEach(obj => {
@@ -578,7 +603,8 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                             delete oldState.src;
                             delete oldState.crossOrigin;
 
-                            const newImg = await FabricImage.fromURL(institutionDetails.logoUrl, { crossOrigin: 'anonymous' });
+                            const safeLogoUrl = normalizeUrl(institutionDetails.logoUrl);
+                            const newImg = await FabricImage.fromURL(safeLogoUrl, { crossOrigin: 'anonymous' });
                             newImg.set({
                                 ...oldState,
                                 _currentUrl: institutionDetails.logoUrl,
@@ -607,7 +633,8 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                             delete oldState.src;
                             delete oldState.crossOrigin;
 
-                            const newImg = await FabricImage.fromURL(institutionDetails.signatureUrl, { crossOrigin: 'anonymous' });
+                            const safeSigUrl = normalizeUrl(institutionDetails.signatureUrl);
+                            const newImg = await FabricImage.fromURL(safeSigUrl, { crossOrigin: 'anonymous' });
                             newImg.set({
                                 ...oldState,
                                 _currentUrl: institutionDetails.signatureUrl,
@@ -930,7 +957,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
 
                         isHistoryProcessing.current = true;
                         try {
-                            await fabricCanvas.loadFromJSON(sideLayout);
+                            await fabricCanvas.loadFromJSON(sanitizeLayoutJSON(sideLayout));
                             restoreCustomRx(fabricCanvas);
                             // Manually enforce lock states after load to ensure Fabric v7 respects them
                             fabricCanvas.getObjects().forEach(obj => {
@@ -1031,7 +1058,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
 
             isHistoryProcessing.current = true;
             try {
-                await fabricCanvas.loadFromJSON(sideLayout);
+                await fabricCanvas.loadFromJSON(sanitizeLayoutJSON(sideLayout));
                 restoreCustomRx(fabricCanvas);
                 // Manually enforce lock states after load
                 fabricCanvas.getObjects().forEach(obj => {
@@ -1192,7 +1219,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
         if (nextLayout) {
             isHistoryProcessing.current = true;
             try {
-                await fabricCanvas.loadFromJSON(nextLayout);
+                await fabricCanvas.loadFromJSON(sanitizeLayoutJSON(nextLayout));
                 restoreCustomRx(fabricCanvas);
                 // Manually enforce lock states after load (standard procedure for Fabric v6/v7)
                 fabricCanvas.getObjects().forEach(obj => {
@@ -2439,7 +2466,7 @@ export default function IDCardDesigner({ isExpanded, onToggleExpand }) {
                     )}
 
                     {/* Canvas Area */}
-                    <div className="relative group transition-all duration-500 ease-out z-10 pt-4 w-full overflow-x-auto scrollbar-hide flex justify-center">
+                    <div className="relative group transition-all duration-500 ease-out z-10 p-8 md:p-12 w-full overflow-x-auto scrollbar-hide flex justify-center">
                         <div className="bg-white p-6 md:p-10 rounded-2xl md:rounded-3xl border border-gray-100 shadow-2xl overflow-hidden shrink-0"><canvas ref={canvasRef} /></div>
                     </div>
                     {status.message && (
